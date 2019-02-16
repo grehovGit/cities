@@ -1,4 +1,4 @@
-package model;
+package builder;
 
 public interface BuildStep {
     void makeStep();

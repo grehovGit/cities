@@ -8,6 +8,6 @@ import lombok.Data;
 @Builder
 @AllArgsConstructor
 public class City {
-    private int length, width;
+    private int height, width;
     private int[][] cells;
 }
