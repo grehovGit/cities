@@ -4,20 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Data
 @Builder
 @AllArgsConstructor
 public class Building {
+    private int number;
     private int xTopLeft, yTopLeft;
-    private int width, height;
+    private int width, height, util_type, capacity;
     private int[][] cells;
-    private Type type;
-
-    enum Type {
-        RESIDENT, UTILIT
-    }
+    private char type;
 
     public static int [][] getCells(List<String> buildRows, int width) {
         int [][] newCells = new int[width][buildRows.size()];
@@ -28,6 +26,7 @@ public class Building {
                     ? 1 : 0;
             };
         }
+        return newCells;
     }
 
     public static int distance(Building one, Building other) {
@@ -56,5 +55,35 @@ public class Building {
             }
         }
         return minDistance;
+    }
+
+    public int getCellValue(int x, int y) {
+        return this.cells[x][y];
+    }
+
+    @Override
+    public String toString() {
+        return "Building{" +
+            "xTopLeft=" + xTopLeft +
+            ", yTopLeft=" + yTopLeft +
+            ", width=" + width +
+            ", height=" + height +
+            ", util_type=" + util_type +
+            ", capacity=" + capacity +
+            ", cells=" + printCells() +
+            ", type=" + type +
+            '}';
+    }
+
+    private String printCells() {
+        StringBuilder lines = new StringBuilder();
+        lines.append(System.lineSeparator());
+        for (int i = 0; i < height; ++i) {
+            for (int j = 0; j < width; ++j) {
+                lines.append(cells[j][i]);
+            }
+            lines.append(System.lineSeparator());
+        }
+        return lines.toString();
     }
 }

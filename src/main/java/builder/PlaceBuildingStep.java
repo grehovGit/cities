@@ -9,11 +9,10 @@ public class PlaceBuildingStep implements BuildStep {
     Building building;
 
     public PlaceBuildingStep(Building building, CityBuilder cityBuilder) {
-        this.city = cityBuilder.;
+        this.city = cityBuilder.getCity();
         this.building = building;
     }
 
-    public void makeStep() {
-        for ()
-    }
+    @Override
+    public void makeStep() { city.placeBuilding(building); }
 }
