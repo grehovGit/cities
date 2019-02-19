@@ -10,10 +10,10 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-public class Building {
+public class Building implements Comparable<Building>{
     private int number;
     private int xTopLeft, yTopLeft;
-    private int width, height, util_type, capacity;
+    private int width, height, utilType, capacity;
     private int[][] cells;
     private char type;
 
@@ -61,6 +61,11 @@ public class Building {
         return this.cells[x][y];
     }
 
+    public void resetPosition() {
+        this.setXTopLeft(0);
+        this.setYTopLeft(0);
+    }
+
     @Override
     public String toString() {
         return "Building{" +
@@ -68,7 +73,7 @@ public class Building {
             ", yTopLeft=" + yTopLeft +
             ", width=" + width +
             ", height=" + height +
-            ", util_type=" + util_type +
+            ", util_type=" + utilType +
             ", capacity=" + capacity +
             ", cells=" + printCells() +
             ", type=" + type +
@@ -85,5 +90,32 @@ public class Building {
             lines.append(System.lineSeparator());
         }
         return lines.toString();
+    }
+
+    @Override
+    public int compareTo(Building o) {
+        return this.getNumber() - o.getNumber();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Building building = (Building) o;
+
+        if (number != building.number) return false;
+        if (xTopLeft != building.xTopLeft) return false;
+        return yTopLeft == building.yTopLeft;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + number;
+        result = 31 * result + xTopLeft;
+        result = 31 * result + yTopLeft;
+        return result;
     }
 }

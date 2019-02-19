@@ -14,5 +14,8 @@ public class PlaceBuildingStep implements BuildStep {
     }
 
     @Override
-    public void makeStep() { city.placeBuilding(building); }
+    public void makeStep() {
+        city.placeBuilding(building);
+        System.out.println(city);
+    }
 }

@@ -42,6 +42,9 @@ public class CityBuilder {
         cityPlan.add("##");
 
         CityBuilder cityBuilder = new CityBuilder(cityPlan);
+        BuildStep recursiveCalcRatingStep = new RecursiveCalcRatingStep(cityBuilder);
+        recursiveCalcRatingStep.makeStep();
+
     }
 
     public void rememberState(String stateCode, int rate) {
