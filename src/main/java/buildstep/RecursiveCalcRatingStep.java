@@ -1,10 +1,12 @@
-package builder;
+package buildstep;
 
-import javafx.collections.transformation.SortedList;
+import builder.CityBuilder;
+import buildstep.PlaceBuildingStep;
+import buildstep.RemoveBuildingStep;
+import buildstep.BuildStep;
 import model.Building;
 import model.City;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class RecursiveCalcRatingStep implements BuildStep {
@@ -23,12 +25,11 @@ public class RecursiveCalcRatingStep implements BuildStep {
 
     @Override
     public void makeStep() {
-        Iterator<Building> it = buildings.iterator();
-        while (it.hasNext()) {
-            Building building = it.next();
-            rate(buildings, 0);
-            it.remove();
-            buildings.add(0, building);
+        for (int i = 0; i < buildings.size(); ++i) {
+            Building rootBuilding = buildings.get(i);
+            buildings.remove(i);
+            buildings.add(0, rootBuilding);
+            rate(this.buildings, 0);
         }
     }
 
@@ -37,17 +38,20 @@ public class RecursiveCalcRatingStep implements BuildStep {
         List<Building> others = buildings.subList(1, buildings.size());
         placedBuildings.add(building);
 
-        while (!isFinishState(building)) {
+        while(inCity(building)) {
             CalcBuildingRatingStep calcBuildingRatingStep = new CalcBuildingRatingStep(
                 cityBuilder,
                 building,
                 placedBuildings,
                 currentRate);
             calcBuildingRatingStep.makeStep();
-            currentRate = calcBuildingRatingStep.getCurrentRateAfter();
+            int newRate = calcBuildingRatingStep.getCurrentRateAfter();
 
-            if (others.size() > 0) {
-                //TODO: AVOID PLACING BUILDING WITHOUT CHECK
+            if (building.getNumber() == 0 && building.getXTopLeft() == 5 && building.getYTopLeft() == 1) {
+                System.out.println("here");
+            }
+
+            if (newRate >= currentRate && others.size() > 0) {
                 PlaceBuildingStep placeBuildingStep = new PlaceBuildingStep(building, this.cityBuilder);
                 placeBuildingStep.makeStep();
 
@@ -58,11 +62,13 @@ public class RecursiveCalcRatingStep implements BuildStep {
             }
             moveBuilding(building);
         }
+        building.resetPosition();
+        placedBuildings.remove(building);
     }
 
-    private boolean isFinishState(Building building){
-        return building.getXTopLeft() + building.getWidth() > this.city.getWidth() &&
-            building.getYTopLeft() + building.getHeight() >= this.city.getHeight();
+    private boolean inCity(Building building){
+        return building.getXTopLeft() + building.getWidth() <= this.city.getWidth() &&
+            building.getYTopLeft() + building.getHeight() <= this.city.getHeight();
     }
 
     private boolean isInEndOfRow(Building building){
@@ -75,13 +81,13 @@ public class RecursiveCalcRatingStep implements BuildStep {
     }
 
     private void moveNext(Building building) {
-        building.setYTopLeft(building.getXTopLeft() + 1);
+        building.setXTopLeft(building.getXTopLeft() + 1);
     }
 
     private void moveBuilding(Building building) {
-        if (isFinishState(building)) {
+/*        if (inCity(building)) {
             throw new IllegalStateException("Building is already in finish state!!");
-        }
+        }*/
 
         if (isInEndOfRow(building)) {
             moveToNextRow(building);

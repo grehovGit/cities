@@ -30,20 +30,20 @@ public class Building implements Comparable<Building>{
     }
 
     public static int distance(Building one, Building other) {
-        int oneLength = one.getHeight();
         int oneWidth = one.getWidth();
-        int otherLength = other.getHeight();
+        int oneHeight = one.getHeight();
         int otherWidth = other.getWidth();
+        int otherHeight = other.getHeight();
 
         int [][] oneCells = one.getCells();
         int [][] otherCells = other.getCells();
 
         int minDistance = Integer.MAX_VALUE;
 
-        for (int i = 0; i < oneLength; ++i) {
-            for (int j = 0; j < oneWidth; ++j) {
-                for (int l = 0; l < otherLength; ++l) {
-                    for (int m = 0; m < otherWidth; ++m) {
+        for (int i = 0; i < oneWidth; ++i) {
+            for (int j = 0; j < oneHeight; ++j) {
+                for (int l = 0; l < otherWidth; ++l) {
+                    for (int m = 0; m < otherHeight; ++m) {
                         if (oneCells[i][j] == 1 && otherCells[l][m] == 1
                             && Math.abs(other.getXTopLeft() + l - (one.getXTopLeft() + i))
                             + Math.abs(other.getYTopLeft() + m - (one.getYTopLeft() + j)) < minDistance) {
@@ -82,12 +82,10 @@ public class Building implements Comparable<Building>{
 
     private String printCells() {
         StringBuilder lines = new StringBuilder();
-        lines.append(System.lineSeparator());
         for (int i = 0; i < height; ++i) {
             for (int j = 0; j < width; ++j) {
                 lines.append(cells[j][i]);
             }
-            lines.append(System.lineSeparator());
         }
         return lines.toString();
     }

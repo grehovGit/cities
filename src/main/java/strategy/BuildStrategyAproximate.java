@@ -1,4 +1,6 @@
-package builder;
+package strategy;
+
+import builder.BuildStrategy;
 
 public class BuildStrategyAproximate implements BuildStrategy {
     @Override

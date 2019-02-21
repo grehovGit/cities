@@ -3,8 +3,8 @@ package builder;
 import lombok.Data;
 import model.Building;
 import model.City;
+import buildstep.*;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 @Data
@@ -20,8 +20,8 @@ public class CityBuilder {
     public static final int BUILDING_CAPACTY_OR_UTIL_TYPE_INDEX = 3;
 
 
-    static Map<String, Integer> calculatedStates = new HashMap<>(10000000);
-    static List<Building> buildings = new ArrayList(10);
+    public static Map<String, Integer> calculatedStates = new HashMap<>(10000000);
+    public static List<Building> buildings = new ArrayList(10);
     private City city;
     private int maxWalkingDistance;
     private int buildingsNmber;
@@ -44,6 +44,8 @@ public class CityBuilder {
         CityBuilder cityBuilder = new CityBuilder(cityPlan);
         BuildStep recursiveCalcRatingStep = new RecursiveCalcRatingStep(cityBuilder);
         recursiveCalcRatingStep.makeStep();
+        System.out.println("Max Rate:" + cityBuilder.getMaxRate());
+        System.out.println("Max Key:" + cityBuilder.getMaxKey());
 
     }
 

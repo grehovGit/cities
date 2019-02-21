@@ -1,10 +1,14 @@
-package builder;
+package buildstep;
 
+import builder.CityBuilder;
 import lombok.Data;
 import model.Building;
 import model.City;
+import buildstep.BuildStep;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -44,6 +48,12 @@ public class CalcBuildingRatingStep implements BuildStep {
         String currentState = this.getNewState();
         Integer rate = calculatedStates.get(currentState);
 
+        String maxState = "[Building{xTopLeft=1, yTopLeft=0, width=2, height=3, util_type=25, capacity=25, cells=011101, type=R}, Building{xTopLeft=0, yTopLeft=0, width=4, height=1, util_type=1, capacity=1, cells=1111, type=U}, Building{xTopLeft=0, yTopLeft=0, width=2, height=2, util_type=5, capacity=5, cells=1111, type=U}]0 1 0";
+
+        if (currentState.equals(maxState)) {
+            System.out.println(currentState);
+        }
+
         if (rate == null) {
             rate = currentRateBefore + calculateNextBuildingRate();
         }
@@ -69,14 +79,14 @@ public class CalcBuildingRatingStep implements BuildStep {
     }
 
     private String getNewState() {
-        placedBuildings.add(this.nextBuilding);
+//        placedBuildings.add(this.nextBuilding);
         String newState =  placedBuildings.toString()
             + nextBuilding.getNumber()
             + " "
             + nextBuilding.getXTopLeft()
             + " "
             + nextBuilding.getYTopLeft();
-        placedBuildings.remove(this.nextBuilding);
+//        placedBuildings.remove(this.nextBuilding);
         return newState;
     }
 

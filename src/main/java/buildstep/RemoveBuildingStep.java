@@ -1,5 +1,6 @@
-package builder;
+package buildstep;
 
+import builder.CityBuilder;
 import model.Building;
 import model.City;
 
