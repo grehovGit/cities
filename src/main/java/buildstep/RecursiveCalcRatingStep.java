@@ -47,10 +47,6 @@ public class RecursiveCalcRatingStep implements BuildStep {
             calcBuildingRatingStep.makeStep();
             int newRate = calcBuildingRatingStep.getCurrentRateAfter();
 
-            if (building.getNumber() == 0 && building.getXTopLeft() == 5 && building.getYTopLeft() == 1) {
-                System.out.println("here");
-            }
-
             if (newRate >= currentRate && others.size() > 0) {
                 PlaceBuildingStep placeBuildingStep = new PlaceBuildingStep(building, this.cityBuilder);
                 placeBuildingStep.makeStep();

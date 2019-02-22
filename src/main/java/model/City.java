@@ -10,6 +10,10 @@ import java.util.Arrays;
 @Builder
 @AllArgsConstructor
 public class City {
+    public static final int CITY_WIDTH_INDEX = 1;
+    public static final int CITY_HEIGHT_INDEX = 0;
+    public static final int BUILDINGS_NUMBER_INDEX = 3;
+    public static final int MAX_WALKING_DISTANCE_INDEX = 2;
     private int height, width;
     private int[][] cells;
 

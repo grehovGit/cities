@@ -3,14 +3,20 @@ package model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Data
 @Builder
+@NoArgsConstructor
 @AllArgsConstructor
 public class Building implements Comparable<Building>{
+    public static final int BUILDING_WIDTH_INDEX = 2;
+    public static final int BUILDING_HEIGHT_INDEX = 1;
+    public static final int BUILDING_TYPE_INDEX = 0;
+    public static final int BUILDING_CAPACTY_OR_UTIL_TYPE_INDEX = 3;
     private int number;
     private int xTopLeft, yTopLeft;
     private int width, height, utilType, capacity;
