@@ -6,20 +6,19 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InputOutput {
     public static LinkedList<String> load(String pathString) {
         Path path = Paths.get(pathString);
-        LinkedList<String> lines = new LinkedList<>();
         try {
-            Files.lines(path)
+            return Files.lines(path)
                 .peek(line -> System.out.println(line))
-                .forEach(line -> lines.add(line));
+                .collect(Collectors.toCollection(() -> new LinkedList<>()));
         } catch (IOException e) {
             System.out.println(e);
         }
-        System.out.println(lines);
-        return lines;
+        return new LinkedList<>();
     }
 
     public static void export(List<String> output, String pathString) {
