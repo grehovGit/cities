@@ -36,6 +36,18 @@ public class City {
         }
     }
 
+    public void placeBuildingWithNumber(Building building) {
+        for (int i = 0; i < building.getWidth(); ++i) {
+            for (int j = 0; j < building.getHeight(); ++j) {
+                if (building.getCellValue(i, j) > 0) {
+                    this.cells[building.getXTopLeft() + i][building.getYTopLeft() + j]
+                        = building.getNumber() + 1;
+
+                }
+            }
+        }
+    }
+
     public boolean canPlace(Building newBuilding) {
         int height = newBuilding.getHeight();
         int width = newBuilding.getWidth();

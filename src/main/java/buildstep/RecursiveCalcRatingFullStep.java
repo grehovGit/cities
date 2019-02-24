@@ -1,22 +1,21 @@
 package buildstep;
 
 import builder.CityBuilder;
-import buildstep.PlaceBuildingStep;
-import buildstep.RemoveBuildingStep;
-import buildstep.BuildStep;
 import model.Building;
 import model.City;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeSet;
 
-public class RecursiveCalcRatingStep implements BuildStep {
+public class RecursiveCalcRatingFullStep implements BuildStep {
     CityBuilder cityBuilder;
     private City city;
     private List<Building> buildings;
     private Map<String, Integer> calculatedStates;
     private TreeSet<Building> placedBuildings = new TreeSet<>();
 
-    public RecursiveCalcRatingStep(CityBuilder cityBuilder) {
+    public RecursiveCalcRatingFullStep(CityBuilder cityBuilder) {
         this.city = cityBuilder.getCity();
         this.buildings = CityBuilder.buildings;
         this.calculatedStates = CityBuilder.calculatedStates;
@@ -81,10 +80,6 @@ public class RecursiveCalcRatingStep implements BuildStep {
     }
 
     private void moveBuilding(Building building) {
-/*        if (inCity(building)) {
-            throw new IllegalStateException("Building is already in finish state!!");
-        }*/
-
         if (isInEndOfRow(building)) {
             moveToNextRow(building);
         } else {

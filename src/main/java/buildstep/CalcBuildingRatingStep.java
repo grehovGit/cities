@@ -52,6 +52,7 @@ public class CalcBuildingRatingStep implements BuildStep {
         if (rate == null) {
             rate = currentRateBefore + calculateNextBuildingRate();
         }
+
         remeberState(currentState, rate);
 
         if (rate > this.cityBuilder.getMaxRate()) {
@@ -67,8 +68,11 @@ public class CalcBuildingRatingStep implements BuildStep {
         placedBuildings.forEach(building -> {
             maxState.add(Building.builder()
                 .number(building.getNumber())
+                .width(building.getWidth())
+                .height(building.getHeight())
                 .xTopLeft(building.getXTopLeft())
                 .yTopLeft(building.getYTopLeft())
+                .cells(building.getCells())
                 .build());});
         this.cityBuilder.setMaxState(maxState);
     }

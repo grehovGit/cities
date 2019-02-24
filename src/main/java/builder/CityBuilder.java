@@ -6,6 +6,9 @@ import lombok.Data;
 import model.Building;
 import model.City;
 import buildstep.*;
+import strategy.BuildStrategy;
+import strategy.BuildStrategyAproximate;
+import strategy.BuildStrategyOptimize;
 
 import java.util.*;
 
@@ -25,8 +28,12 @@ public class CityBuilder {
     public static void main(String[] args) {
         LinkedList<String> cityPlan = InputOutput.load("C://test/cityStart.txt");
         CityBuilder cityBuilder = new CityBuilder(cityPlan);
-        BuildStep recursiveCalcRatingStep = new RecursiveCalcRatingStep(cityBuilder);
-        recursiveCalcRatingStep.makeStep();
+        BuildStrategy solvingStrategy = cityBuilder.getStratgey();
+
+        solvingStrategy.build();
+        BuildStep visualization = new VisualizeResultStep(cityBuilder);
+        visualization.makeStep();
+
         InputOutput.export(Parser.exportResult(cityBuilder.getMaxState()), "C://test/cityStart_result.txt");
 
         System.out.println("Max State:" + cityBuilder.getMaxState());
@@ -47,5 +54,16 @@ public class CityBuilder {
         System.out.println(city);
         buildings.forEach(building -> city.removeBuilding(building));
         System.out.println(city);
+    }
+
+    private BuildStrategy getStratgey()
+    {
+        return
+            this.getCity().getWidth()
+                * this.getCity().getHeight()
+                * this.getBuildingsNmber()
+                < 500
+                ? new BuildStrategyOptimize(this)
+                : new BuildStrategyAproximate(this);
     }
 }

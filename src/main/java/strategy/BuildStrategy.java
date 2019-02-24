@@ -1,4 +1,4 @@
-package builder;
+package strategy;
 
 public interface BuildStrategy {
     void build();
