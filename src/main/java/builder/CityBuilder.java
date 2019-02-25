@@ -8,6 +8,7 @@ import model.City;
 import buildstep.*;
 import strategy.BuildStrategy;
 import strategy.BuildStrategyAproximate;
+import strategy.BuildStrategyEager;
 import strategy.BuildStrategyOptimize;
 
 import java.util.*;
@@ -64,6 +65,11 @@ public class CityBuilder {
                 * this.getBuildingsNmber()
                 < 500
                 ? new BuildStrategyOptimize(this)
-                : new BuildStrategyAproximate(this);
+                :   this.getCity().getWidth()
+                    * this.getCity().getHeight()
+                    * this.getBuildingsNmber()
+                    < 1000
+                    ? new BuildStrategyAproximate(this)
+                    :  new BuildStrategyEager(this);
     }
 }
